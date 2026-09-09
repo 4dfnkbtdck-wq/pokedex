@@ -7,9 +7,9 @@ A small, dependency-free web app for tracking which Pokémon you've
 obtained — the same idea as a checklist spreadsheet, but as an app. Covers
 the full National Pokédex, #001 Bulbasaur through #1025 Pecharunt (Gen
 1–9), plus every canonical **Mega Evolution** (48), **Gigantamax** form
-(34), and tracked **regional variant** — Alolan (18), Galarian (19),
-Hisuian (14), and Paldean (1, Wooper) — each as its own separate entry
-right next to its base species.
+(34), and regional variant — Alolan (18), Galarian (19), Hisuian (16),
+and Paldean (4: Wooper plus all three Tauros breeds) — each as its own
+separate entry right next to its base species.
 
 ## Running it
 
@@ -40,7 +40,7 @@ be live at `https://<your-username>.github.io/pokedex/` within a minute.
 - **Clear all caught** resets your whole list (asks for confirmation
   first).
 - The progress bar and header count track your total caught out of
-  1159 (1025 species + 52 regional variants + 48 Megas + 34 Gigantamax
+  1164 (1025 species + 57 regional variants + 48 Megas + 34 Gigantamax
   forms), regardless of any active filter.
 
 Your caught list is saved to this browser's `localStorage` — it's per
