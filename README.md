@@ -9,7 +9,7 @@ the full National Pokédex, #001 Bulbasaur through #1025 Pecharunt (Gen
 1–9), plus every **Mega Evolution** (96: 48 mainline — 30 from X/Y, 18
 from Omega Ruby/Alpha Sapphire — plus 48 from Pokémon Legends Z-A: 26
 in its base game and 22 in its Mega Dimension DLC), **Gigantamax** form
-(34), and regional variant — Alolan (18), Galarian (19), Hisuian (16),
+(32), and regional variant — Alolan (18), Galarian (19), Hisuian (16),
 and Paldean (4: Wooper plus all three Tauros breeds) — each as its own
 separate entry right next to its base species.
 
@@ -57,8 +57,8 @@ connection the first time each one loads).
   "gen 3" if you own that whole box.
 - **Clear all caught** resets your whole list (asks for confirmation
   first).
-- The number in the navbar is always your overall total out of 1212
-  (1025 species + 57 regional variants + 96 Megas + 34 Gigantamax
+- The number in the navbar is always your overall total out of 1210
+  (1025 species + 57 regional variants + 96 Megas + 32 Gigantamax
   forms). The progress bar below it instead scopes to your active
   Generation/Form/Type filters and search — e.g. filtering to Gen 1
   shows "X / 151 caught" — so it ignores the Caught/Missing toggle
@@ -93,6 +93,15 @@ Galarian Darmanitan is tracked once (its Standard Mode form) — Zen Mode
 is a temporary in-battle transformation, not a separate obtainable
 Pokémon, matching how the original (non-Galarian) Darmanitan's own Zen
 Mode isn't tracked separately either.
+
+Gigantamax works out to 32 rather than 34: Toxtricity's Low Key
+appearance is identical to its Amped one (tracked once, like
+Meowstic's other gender), and Gigantamax Flapple/Gigantamax Appletun
+are a special case — two different species that happen to share the
+exact same in-game model — tracked as one combined entry ("Gigantamax
+Flapple / Appletun") under Flapple's dex number but findable by
+searching either name. Urshifu's two Gigantamax styles (Single Strike
+and Rapid Strike) are visually and mechanically distinct, so both stay.
 
 ## Files
 
