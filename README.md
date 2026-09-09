@@ -6,12 +6,13 @@
 A small, dependency-free web app for tracking which Pokémon you've
 obtained — the same idea as a checklist spreadsheet, but as an app. Covers
 the full National Pokédex, #001 Bulbasaur through #1025 Pecharunt (Gen
-1–9), plus every **Mega Evolution** across all three sources — the
-mainline-game roster (48), Pokémon GO's own additions (2: Mega Raichu
-X/Y), and Pokémon Legends Z-A's Mega Dimension DLC (47) — **Gigantamax**
-form (34), and regional variant — Alolan (18), Galarian (19), Hisuian
-(16), and Paldean (4: Wooper plus all three Tauros breeds) — each as
-its own separate entry right next to its base species.
+1–9), plus every **Mega Evolution** across all three sources it's come
+from so far — the mainline games (48: 30 from X/Y, 18 from Omega Ruby/
+Alpha Sapphire), Pokémon Legends Z-A's base game (26), and its **Mega
+Dimension** DLC (23) — **Gigantamax** form (34), and regional variant —
+Alolan (18), Galarian (19), Hisuian (16), and Paldean (4: Wooper plus
+all three Tauros breeds) — each as its own separate entry right next to
+its base species.
 
 ## Running it
 
@@ -72,28 +73,34 @@ browser/device, with no account or server involved.
 `js/data.js` holds the dex list, generated from [PokéAPI](https://pokeapi.co)'s
 public CSV data. Each entry has an English name, generation, type(s), a
 `category` (`base`, `alolan`, `galarian`, `hisuian`, `paldean`, `mega`,
-`mega_go`, `mega_za`, or `gmax`), and a `baseId` — the National Dex
+`mega_za`, `mega_za_dlc`, or `gmax`), and a `baseId` — the National Dex
 number it's filed under (a form's own `id` is its distinct PokéAPI form
 id, so its caught state doesn't collide with its base species). Sprite
 images aren't bundled — each card loads its sprite directly from
 PokéAPI's [sprites repo](https://github.com/PokeAPI/sprites) by that id.
 
-Beyond the 48 mainline Megas, two other sources added their own:
+Beyond the mainline 48, Pokémon Legends Z-A added two more waves:
 
-- `mega_go` — Pokémon GO's own additions (currently just Mega Raichu
-  X/Y, debuted July 2026), tagged "MEGA GO" on the card.
-- `mega_za` — Pokémon Legends Z-A's **Mega Dimension** DLC (December
-  2025), which added 47 more across many Pokémon that never had a Mega
-  before (Victreebel, Dragonite, Zeraora, Golisopod, and more), plus
-  second "Z" Megas for three that already had one (Absol, Garchomp,
-  Lucario). Tagged "MEGA Z-A" on the card.
+- `mega_za` — its base game (26): Clefable, Victreebel, Starmie,
+  Dragonite, Meganium, Feraligatr, Skarmory, Froslass, Emboar,
+  Excadrill, Scolipede, Scrafty, Eelektross, Chandelure, Chesnaught,
+  Delphox, Greninja, Pyroar, Eternal Floette, Malamar, Barbaracle,
+  Dragalge, Hawlucha, Zygarde, Drampa, and Falinks. Tagged "MEGA Z-A".
+- `mega_za_dlc` — its **Mega Dimension** DLC (23): Chimecho, Staraptor,
+  Heatran, Darkrai, Golurk, Meowstic (Male and Female forms),
+  Crabominable, Golisopod, Magearna (plus its Original Color variant),
+  Zeraora, Scovillain, Glimmora, Tatsugiri (all three forms),
+  Baxcalibur, and Mega Raichu X/Y — plus second "Z" Megas for three
+  Pokémon that already had one from the mainline games (Absol, Garchomp,
+  Lucario). Tagged "MEGA DLC". Mega Raichu is **not** a Pokémon GO
+  exclusive — GO's Raichu Super Mega Raid Day (July 2026) just featured
+  it in a raid rotation after its Legends Z-A debut; an earlier revision
+  of this tracker wrongly tagged it "MEGA GO" and implied it originated
+  there.
 
 All three group under the single **Mega** form filter — that's still
 the form someone's looking for — but each card's own tag says which
-game it's from. (Earlier revisions of this README wrongly called the
-`mega_za` set "unofficial fan content" based on PokéAPI not yet having
-assigned it a final Pokédex order — that was a bad inference, not a
-confirmed fact, and it was wrong: it's real DLC content.)
+wave it's from.
 
 Galarian Darmanitan is tracked once (its Standard Mode form) — Zen Mode
 is a temporary in-battle transformation, not a separate obtainable

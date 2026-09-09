@@ -19,19 +19,21 @@
     hisuian: "HISUI",
     paldean: "PALDEA",
     mega: "MEGA",
-    mega_go: "MEGA GO",
     mega_za: "MEGA Z-A",
+    mega_za_dlc: "MEGA DLC",
     gmax: "GMAX",
   };
 
-  const MEGA_CATEGORIES = ["mega", "mega_go", "mega_za"];
+  const MEGA_CATEGORIES = ["mega", "mega_za", "mega_za_dlc"];
 
-  // Pokémon GO (Mega Raichu X/Y, July 2026) and Pokémon Legends Z-A's
-  // Mega Dimension DLC (December 2025) each added their own Megas beyond
-  // the mainline-game roster of 48 — tagged as their own categories so
-  // each card can call out where it's from, but all three group under
-  // the single "Mega" form filter since that's still the form a viewer
-  // is looking for.
+  // Pokémon Legends Z-A added its own Megas beyond the mainline-game
+  // roster of 48 (30 from X/Y + 18 from Omega Ruby/Alpha Sapphire): 26
+  // in the base game, plus 23 more in the Mega Dimension DLC (including
+  // Mega Raichu X/Y — not a Pokémon GO exclusive; GO just later featured
+  // it in a raid event after its Legends Z-A debut). Tagged as their own
+  // categories so each card can call out where it's from, but all three
+  // group under the single "Mega" form filter since that's still the
+  // form a viewer is looking for.
   function formFilterMatches(category) {
     if (state.form === "mega") return MEGA_CATEGORIES.includes(category);
     return category === state.form;
