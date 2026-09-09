@@ -6,10 +6,12 @@
 A small, dependency-free web app for tracking which Pokémon you've
 obtained — the same idea as a checklist spreadsheet, but as an app. Covers
 the full National Pokédex, #001 Bulbasaur through #1025 Pecharunt (Gen
-1–9), plus every canonical **Mega Evolution** (48), **Gigantamax** form
-(34), and regional variant — Alolan (18), Galarian (19), Hisuian (16),
-and Paldean (4: Wooper plus all three Tauros breeds) — each as its own
-separate entry right next to its base species.
+1–9), plus every canonical **Mega Evolution** (48, plus Mega Raichu X/Y
+— a Pokémon GO exclusive, tagged separately since it's not from a
+mainline game), **Gigantamax** form (34), and regional variant — Alolan
+(18), Galarian (19), Hisuian (16), and Paldean (4: Wooper plus all
+three Tauros breeds) — each as its own separate entry right next to its
+base species.
 
 ## Running it
 
@@ -55,8 +57,8 @@ connection the first time each one loads).
   "gen 3" if you own that whole box.
 - **Clear all caught** resets your whole list (asks for confirmation
   first).
-- The number in the navbar is always your overall total out of 1164
-  (1025 species + 57 regional variants + 48 Megas + 34 Gigantamax
+- The number in the navbar is always your overall total out of 1166
+  (1025 species + 57 regional variants + 50 Megas + 34 Gigantamax
   forms). The progress bar below it instead scopes to your active
   Generation/Form/Type filters and search — e.g. filtering to Gen 1
   shows "X / 151 caught" — so it ignores the Caught/Missing toggle
@@ -70,11 +72,21 @@ browser/device, with no account or server involved.
 `js/data.js` holds the dex list, generated from [PokéAPI](https://pokeapi.co)'s
 public CSV data. Each entry has an English name, generation, type(s), a
 `category` (`base`, `alolan`, `galarian`, `hisuian`, `paldean`, `mega`,
-or `gmax`), and a `baseId` — the National Dex number it's filed under (a
-form's own `id` is its distinct PokéAPI form id, so its caught state
-doesn't collide with its base species). Sprite images aren't bundled —
-each card loads its sprite directly from PokéAPI's
+`mega_go`, or `gmax`), and a `baseId` — the National Dex number it's
+filed under (a form's own `id` is its distinct PokéAPI form id, so its
+caught state doesn't collide with its base species). Sprite images
+aren't bundled — each card loads its sprite directly from PokéAPI's
 [sprites repo](https://github.com/PokeAPI/sprites) by that id.
+
+`mega_go` (currently just Mega Raichu X/Y, debuted July 2026) is
+Pokémon GO's own addition to the Mega roster — it groups under the
+**Mega** form filter alongside the mainline 48, but shows a distinct
+"MEGA GO" tag on its card so it's clear it isn't from a mainline game.
+PokéAPI's raw data actually carries dozens of *other* "mega" entries
+beyond the mainline 48 and these two — all unofficial fan/community
+content (things like "Mega Dragonite" or "Mega Zeraora" that were never
+real in any game, mainline or GO) — identifiable by missing stat/order
+fields that every real entry has populated. Those are excluded.
 
 Galarian Darmanitan is tracked once (its Standard Mode form) — Zen Mode
 is a temporary in-battle transformation, not a separate obtainable

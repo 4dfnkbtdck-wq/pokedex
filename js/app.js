@@ -19,8 +19,18 @@
     hisuian: "HISUI",
     paldean: "PALDEA",
     mega: "MEGA",
+    mega_go: "MEGA GO",
     gmax: "GMAX",
   };
+
+  // Pokémon GO added its own Megas beyond the mainline-game roster (Mega
+  // Raichu X/Y, debuted July 2026) — tagged as their own category so the
+  // card can call out they're GO-exclusive, but grouped with the regular
+  // Mega filter since "Mega" is still the form a viewer is looking for.
+  function formFilterMatches(category) {
+    if (state.form === "mega") return category === "mega" || category === "mega_go";
+    return category === state.form;
+  }
 
   const els = {
     grid: document.getElementById("dex-grid"),
@@ -85,7 +95,7 @@
   function matchesScopeFilters(p) {
     if (state.gen !== "all" && String(p.gen) !== state.gen) return false;
     if (state.type !== "all" && !p.types.includes(state.type)) return false;
-    if (state.form !== "all" && p.category !== state.form) return false;
+    if (state.form !== "all" && !formFilterMatches(p.category)) return false;
     if (state.search) {
       const q = state.search.trim().toLowerCase();
       const num = q.replace(/^#/, "");
