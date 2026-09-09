@@ -19,25 +19,8 @@
     hisuian: "HISUI",
     paldean: "PALDEA",
     mega: "MEGA",
-    mega_za: "MEGA Z-A",
-    mega_za_dlc: "MEGA DLC",
     gmax: "GMAX",
   };
-
-  const MEGA_CATEGORIES = ["mega", "mega_za", "mega_za_dlc"];
-
-  // Pokémon Legends Z-A added its own Megas beyond the mainline-game
-  // roster of 48 (30 from X/Y + 18 from Omega Ruby/Alpha Sapphire): 26
-  // in the base game, plus 23 more in the Mega Dimension DLC (including
-  // Mega Raichu X/Y — not a Pokémon GO exclusive; GO just later featured
-  // it in a raid event after its Legends Z-A debut). Tagged as their own
-  // categories so each card can call out where it's from, but all three
-  // group under the single "Mega" form filter since that's still the
-  // form a viewer is looking for.
-  function formFilterMatches(category) {
-    if (state.form === "mega") return MEGA_CATEGORIES.includes(category);
-    return category === state.form;
-  }
 
   const els = {
     grid: document.getElementById("dex-grid"),
@@ -102,7 +85,7 @@
   function matchesScopeFilters(p) {
     if (state.gen !== "all" && String(p.gen) !== state.gen) return false;
     if (state.type !== "all" && !p.types.includes(state.type)) return false;
-    if (state.form !== "all" && !formFilterMatches(p.category)) return false;
+    if (state.form !== "all" && p.category !== state.form) return false;
     if (state.search) {
       const q = state.search.trim().toLowerCase();
       const num = q.replace(/^#/, "");
