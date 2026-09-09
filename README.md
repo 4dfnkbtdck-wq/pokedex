@@ -55,9 +55,12 @@ connection the first time each one loads).
   "gen 3" if you own that whole box.
 - **Clear all caught** resets your whole list (asks for confirmation
   first).
-- The progress bar and header count track your total caught out of
-  1164 (1025 species + 57 regional variants + 48 Megas + 34 Gigantamax
-  forms), regardless of any active filter.
+- The number in the navbar is always your overall total out of 1164
+  (1025 species + 57 regional variants + 48 Megas + 34 Gigantamax
+  forms). The progress bar below it instead scopes to your active
+  Generation/Form/Type filters and search — e.g. filtering to Gen 1
+  shows "X / 151 caught" — so it ignores the Caught/Missing toggle
+  specifically (scoping to that too would always read 100% or 0%).
 
 Your caught list is saved to this browser's `localStorage` — it's per
 browser/device, with no account or server involved.

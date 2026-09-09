@@ -30,6 +30,7 @@
     typeFilter: document.getElementById("type-filter"),
     statusFilter: document.getElementById("status-filter"),
     formFilter: document.getElementById("form-filter"),
+    progressLabel: document.getElementById("progress-label"),
     progressFill: document.getElementById("progress-fill"),
     progressCount: document.getElementById("progress-count"),
     navbarProgress: document.getElementById("navbar-progress"),
@@ -78,13 +79,13 @@
     }
   }
 
-  function matchesFilters(p) {
+  // Everything except the Caught/Missing status toggle — used to scope the
+  // progress card so "Gen 1" reads as "X / 151 caught" instead of just
+  // restating whatever the status filter already narrowed it to.
+  function matchesScopeFilters(p) {
     if (state.gen !== "all" && String(p.gen) !== state.gen) return false;
     if (state.type !== "all" && !p.types.includes(state.type)) return false;
     if (state.form !== "all" && p.category !== state.form) return false;
-    const isCaught = state.caught.has(p.id);
-    if (state.status === "caught" && !isCaught) return false;
-    if (state.status === "missing" && isCaught) return false;
     if (state.search) {
       const q = state.search.trim().toLowerCase();
       const num = q.replace(/^#/, "");
@@ -92,6 +93,14 @@
       const matchesName = p.name.toLowerCase().includes(q);
       if (!matchesNum && !matchesName) return false;
     }
+    return true;
+  }
+
+  function matchesFilters(p) {
+    if (!matchesScopeFilters(p)) return false;
+    const isCaught = state.caught.has(p.id);
+    if (state.status === "caught" && !isCaught) return false;
+    if (state.status === "missing" && isCaught) return false;
     return true;
   }
 
@@ -197,13 +206,38 @@
     }
   }
 
+  function activeButtonLabel(container) {
+    const btn = container.querySelector("button.active");
+    return btn ? btn.textContent : "";
+  }
+
+  function scopeLabel() {
+    const parts = [];
+    if (state.gen !== "all") parts.push(activeButtonLabel(els.genFilter));
+    if (state.form !== "all") parts.push(activeButtonLabel(els.formFilter));
+    if (state.type !== "all") {
+      const t = activeButtonLabel(els.typeFilter);
+      parts.push(t.charAt(0).toUpperCase() + t.slice(1));
+    }
+    if (state.search.trim()) parts.push(`"${state.search.trim()}"`);
+    return parts.length ? `Caught (${parts.join(", ")})` : "Caught";
+  }
+
   function updateProgress() {
-    const total = POKEDEX.length;
-    const caught = state.caught.size;
+    // Navbar stays your all-time overall total; the card below it is
+    // scoped to whatever Gen/Form/Type/search filters are active (but
+    // not the Caught/Missing toggle — see matchesScopeFilters).
+    const overallTotal = POKEDEX.length;
+    const overallCaught = state.caught.size;
+    els.navbarProgress.textContent = `${overallCaught} / ${overallTotal}`;
+
+    const scoped = POKEDEX.filter(matchesScopeFilters);
+    const total = scoped.length;
+    const caught = scoped.reduce((n, p) => n + (state.caught.has(p.id) ? 1 : 0), 0);
     const pct = total ? Math.round((caught / total) * 100) : 0;
+    els.progressLabel.textContent = scopeLabel();
     els.progressFill.style.width = pct + "%";
     els.progressCount.textContent = `${caught} / ${total} (${pct}%)`;
-    els.navbarProgress.textContent = `${caught} / ${total}`;
   }
 
   function setupChipGroup(container, stateKey, datasetKey) {
@@ -216,6 +250,7 @@
       btn.classList.add("active");
       state[stateKey] = btn.dataset[datasetKey];
       renderGrid();
+      updateProgress();
     });
   }
 
@@ -229,6 +264,7 @@
     els.search.addEventListener("input", (e) => {
       state.search = e.target.value;
       renderGrid();
+      updateProgress();
     });
 
     els.markVisible.addEventListener("click", () => {
