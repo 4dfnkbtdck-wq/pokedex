@@ -13,7 +13,14 @@
     form: "all",
   };
 
-  const CATEGORY_LABEL = { mega: "MEGA", gmax: "GMAX" };
+  const CATEGORY_LABEL = {
+    alolan: "ALOLA",
+    galarian: "GALAR",
+    hisuian: "HISUI",
+    paldean: "PALDEA",
+    mega: "MEGA",
+    gmax: "GMAX",
+  };
 
   const els = {
     grid: document.getElementById("dex-grid"),

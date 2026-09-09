@@ -285,6 +285,22 @@ body {
   background: #c0392b;
 }
 
+.dex-card-tag-alolan {
+  background: #ff9500;
+}
+
+.dex-card-tag-galarian {
+  background: #007aff;
+}
+
+.dex-card-tag-hisuian {
+  background: #34785d;
+}
+
+.dex-card-tag-paldean {
+  background: #d6336c;
+}
+
 .dex-sprite-wrap {
   width: 64px;
   height: 64px;

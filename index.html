@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Pokédex Tracker</title>
-  <meta name="description" content="Track which Pokémon you've obtained across the full National Pokédex, including every Mega Evolution and Gigantamax form." />
+  <meta name="description" content="Track which Pokémon you've obtained across the full National Pokédex, including every Mega Evolution, Gigantamax form, and regional variant." />
   <meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%23ee1515' stroke='%23fff' stroke-width='6'/%3E%3Crect x='4' y='46' width='92' height='8' fill='%23222'/%3E%3Ccircle cx='50' cy='50' r='16' fill='%23fff' stroke='%23222' stroke-width='6'/%3E%3C/svg%3E" />
@@ -14,7 +14,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Pokédex" />
-  <link rel="stylesheet" href="css/styles.css?v=2" />
+  <link rel="stylesheet" href="css/styles.css?v=3" />
 </head>
 <body>
   <div class="navbar">
@@ -56,6 +56,10 @@
     <div class="filter-scroll" id="form-filter">
       <button type="button" class="chip active" data-form="all">All Forms</button>
       <button type="button" class="chip" data-form="base">Base</button>
+      <button type="button" class="chip" data-form="alolan">Alolan</button>
+      <button type="button" class="chip" data-form="galarian">Galarian</button>
+      <button type="button" class="chip" data-form="hisuian">Hisuian</button>
+      <button type="button" class="chip" data-form="paldean">Paldean</button>
       <button type="button" class="chip" data-form="mega">Mega</button>
       <button type="button" class="chip" data-form="gmax">Gigantamax</button>
     </div>
@@ -81,8 +85,8 @@
     <p class="page-footer">Your caught list is saved in this browser only (localStorage). Sprite art © Nintendo/Game Freak, served via the open-source PokéAPI sprites project.</p>
   </main>
 
-  <script src="js/data.js?v=2"></script>
-  <script src="js/app.js?v=2"></script>
+  <script src="js/data.js?v=3"></script>
+  <script src="js/app.js?v=3"></script>
   <script>
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => navigator.serviceWorker.register("sw.js"));

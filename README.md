@@ -6,9 +6,10 @@
 A small, dependency-free web app for tracking which Pokémon you've
 obtained — the same idea as a checklist spreadsheet, but as an app. Covers
 the full National Pokédex, #001 Bulbasaur through #1025 Pecharunt (Gen
-1–9), plus every canonical **Mega Evolution** (48) and **Gigantamax**
-form (34), tracked as their own separate entries right next to their
-base species.
+1–9), plus every canonical **Mega Evolution** (48), **Gigantamax** form
+(34), and tracked **regional variant** — Alolan (18), Galarian (19),
+Hisuian (14), and Paldean (1, Wooper) — each as its own separate entry
+right next to its base species.
 
 ## Running it
 
@@ -29,17 +30,18 @@ be live at `https://<your-username>.github.io/pokedex/` within a minute.
 - Tap any Pokémon's card to mark it **caught** (green ring, full-color
   sprite) or back to not-caught (grayed-out sprite).
 - **Search** by name or Pokédex number — searching a number matches a
-  species and all of its Mega/Gigantamax forms.
-- Filter by **Generation**, **Form** (Base / Mega / Gigantamax), **Type**,
-  or **Caught / Missing** status.
+  species and all of its Mega/Gigantamax/regional forms.
+- Filter by **Generation**, **Form** (Base / Alolan / Galarian / Hisuian
+  / Paldean / Mega / Gigantamax), **Type**, or **Caught / Missing**
+  status.
 - **Mark visible caught** marks everything currently matching your
   filters/search as caught in one tap — handy after a search like
   "gen 3" if you own that whole box.
 - **Clear all caught** resets your whole list (asks for confirmation
   first).
-- The progress bar and header count track your total caught out of 1107
-  (1025 species + 48 Megas + 34 Gigantamax forms), regardless of any
-  active filter.
+- The progress bar and header count track your total caught out of
+  1159 (1025 species + 52 regional variants + 48 Megas + 34 Gigantamax
+  forms), regardless of any active filter.
 
 Your caught list is saved to this browser's `localStorage` — it's per
 browser/device, with no account or server involved.
@@ -48,12 +50,17 @@ browser/device, with no account or server involved.
 
 `js/data.js` holds the dex list, generated from [PokéAPI](https://pokeapi.co)'s
 public CSV data. Each entry has an English name, generation, type(s), a
-`category` (`base`, `mega`, or `gmax`), and a `baseId` — the National
-Dex number it's filed under (a Mega/Gigantamax form's own `id` is its
-distinct PokéAPI form id, so its caught state doesn't collide with its
-base species). Sprite images aren't bundled — each card loads its sprite
-directly from PokéAPI's [sprites repo](https://github.com/PokeAPI/sprites)
-by that id.
+`category` (`base`, `alolan`, `galarian`, `hisuian`, `paldean`, `mega`,
+or `gmax`), and a `baseId` — the National Dex number it's filed under (a
+form's own `id` is its distinct PokéAPI form id, so its caught state
+doesn't collide with its base species). Sprite images aren't bundled —
+each card loads its sprite directly from PokéAPI's
+[sprites repo](https://github.com/PokeAPI/sprites) by that id.
+
+Galarian Darmanitan is tracked once (its Standard Mode form) — Zen Mode
+is a temporary in-battle transformation, not a separate obtainable
+Pokémon, matching how the original (non-Galarian) Darmanitan's own Zen
+Mode isn't tracked separately either.
 
 ---
 
