@@ -20,15 +20,20 @@
     paldean: "PALDEA",
     mega: "MEGA",
     mega_go: "MEGA GO",
+    mega_za: "MEGA Z-A",
     gmax: "GMAX",
   };
 
-  // Pokémon GO added its own Megas beyond the mainline-game roster (Mega
-  // Raichu X/Y, debuted July 2026) — tagged as their own category so the
-  // card can call out they're GO-exclusive, but grouped with the regular
-  // Mega filter since "Mega" is still the form a viewer is looking for.
+  const MEGA_CATEGORIES = ["mega", "mega_go", "mega_za"];
+
+  // Pokémon GO (Mega Raichu X/Y, July 2026) and Pokémon Legends Z-A's
+  // Mega Dimension DLC (December 2025) each added their own Megas beyond
+  // the mainline-game roster of 48 — tagged as their own categories so
+  // each card can call out where it's from, but all three group under
+  // the single "Mega" form filter since that's still the form a viewer
+  // is looking for.
   function formFilterMatches(category) {
-    if (state.form === "mega") return category === "mega" || category === "mega_go";
+    if (state.form === "mega") return MEGA_CATEGORIES.includes(category);
     return category === state.form;
   }
 
