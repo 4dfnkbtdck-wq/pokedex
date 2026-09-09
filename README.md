@@ -76,7 +76,11 @@ or `gmax`), and a `baseId` — the National Dex number it's filed under
 (a form's own `id` is its distinct PokéAPI form id, so its caught state
 doesn't collide with its base species). Sprite images aren't bundled —
 each card loads its sprite directly from PokéAPI's
-[sprites repo](https://github.com/PokeAPI/sprites) by that id.
+[sprites repo](https://github.com/PokeAPI/sprites) by that id, falling
+back to that repo's official artwork if the small icon isn't there yet
+(checked against all 1210 ids — as of this writing, the only gap is
+Mega Zygarde, very recent Mega Dimension DLC content the sprites repo
+hasn't caught up on).
 
 Every Mega Evolution — mainline, Legends Z-A's base game, and its Mega
 Dimension DLC alike — shares one plain `mega` category and one "MEGA"

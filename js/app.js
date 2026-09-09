@@ -3,6 +3,10 @@
 
   const STORAGE_KEY = "pokedex-tracker-caught-v1";
   const SPRITE_BASE = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/";
+  // A handful of very-new entries (e.g. Mega Zygarde) aren't in the sprites
+  // repo's small-icon set yet — fall back to official artwork rather than
+  // just leaving the card blank.
+  const SPRITE_FALLBACK_BASE = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/";
 
   const state = {
     caught: loadCaught(),
@@ -65,6 +69,10 @@
 
   function spriteUrl(id) {
     return `${SPRITE_BASE}${id}.png`;
+  }
+
+  function spriteFallbackUrl(id) {
+    return `${SPRITE_FALLBACK_BASE}${id}.png`;
   }
 
   function buildTypeFilterChips() {
@@ -156,7 +164,12 @@
       img.alt = "";
       img.src = spriteUrl(p.id);
       img.onerror = () => {
-        img.style.visibility = "hidden";
+        if (!img.dataset.triedFallback) {
+          img.dataset.triedFallback = "1";
+          img.src = spriteFallbackUrl(p.id);
+        } else {
+          img.style.visibility = "hidden";
+        }
       };
       spriteWrap.appendChild(img);
       card.appendChild(spriteWrap);
