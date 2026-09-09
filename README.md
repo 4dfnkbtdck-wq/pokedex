@@ -6,9 +6,9 @@
 A small, dependency-free web app for tracking which Pokémon you've
 obtained — the same idea as a checklist spreadsheet, but as an app. Covers
 the full National Pokédex, #001 Bulbasaur through #1025 Pecharunt (Gen
-1–9), plus every **Mega Evolution** (93: 48 mainline — 30 from X/Y, 18
-from Omega Ruby/Alpha Sapphire — plus 45 from Pokémon Legends Z-A: 26
-in its base game and 19 in its Mega Dimension DLC), **Gigantamax** form
+1–9), plus every **Mega Evolution** (96: 48 mainline — 30 from X/Y, 18
+from Omega Ruby/Alpha Sapphire — plus 48 from Pokémon Legends Z-A: 26
+in its base game and 22 in its Mega Dimension DLC), **Gigantamax** form
 (34), and regional variant — Alolan (18), Galarian (19), Hisuian (16),
 and Paldean (4: Wooper plus all three Tauros breeds) — each as its own
 separate entry right next to its base species.
@@ -57,8 +57,8 @@ connection the first time each one loads).
   "gen 3" if you own that whole box.
 - **Clear all caught** resets your whole list (asks for confirmation
   first).
-- The number in the navbar is always your overall total out of 1209
-  (1025 species + 57 regional variants + 93 Megas + 34 Gigantamax
+- The number in the navbar is always your overall total out of 1212
+  (1025 species + 57 regional variants + 96 Megas + 34 Gigantamax
   forms). The progress bar below it instead scopes to your active
   Generation/Form/Type filters and search — e.g. filtering to Gen 1
   shows "X / 151 caught" — so it ignores the Caught/Missing toggle
@@ -81,13 +81,13 @@ each card loads its sprite directly from PokéAPI's
 Every Mega Evolution — mainline, Legends Z-A's base game, and its Mega
 Dimension DLC alike — shares one plain `mega` category and one "MEGA"
 card tag; the app doesn't distinguish which game a Mega is from, only
-that it's a Mega. The 93 total breaks down as 48 mainline (30 from X/Y,
-18 from Omega Ruby/Alpha Sapphire) + 45 from Legends Z-A (26 in its
-base game, 19 in Mega Dimension). A few Legends Z-A Megas have
-cosmetic-only sibling forms — Meowstic's other gender, Magearna's
-Original Color, two of Tatsugiri's three patterns — that are identical
-in type to the form already listed, so only one representative entry
-is tracked per Pokémon rather than one per cosmetic variant.
+that it's a Mega. The 96 total breaks down as 48 mainline (30 from X/Y,
+18 from Omega Ruby/Alpha Sapphire) + 48 from Legends Z-A (26 in its
+base game, 22 in Mega Dimension). Magearna's Original Color and all
+three of Tatsugiri's patterns (Curly/Droopy/Stretchy) are each tracked
+as their own entry despite sharing a type with their sibling forms;
+Meowstic's other gender is the one remaining cosmetic-only sibling
+collapsed into a single representative entry.
 
 Galarian Darmanitan is tracked once (its Standard Mode form) — Zen Mode
 is a temporary in-battle transformation, not a separate obtainable
