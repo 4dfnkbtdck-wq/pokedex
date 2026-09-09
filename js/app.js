@@ -10,7 +10,10 @@
     gen: "all",
     type: "all",
     status: "all",
+    form: "all",
   };
+
+  const CATEGORY_LABEL = { mega: "MEGA", gmax: "GMAX" };
 
   const els = {
     grid: document.getElementById("dex-grid"),
@@ -19,6 +22,7 @@
     genFilter: document.getElementById("gen-filter"),
     typeFilter: document.getElementById("type-filter"),
     statusFilter: document.getElementById("status-filter"),
+    formFilter: document.getElementById("form-filter"),
     progressFill: document.getElementById("progress-fill"),
     progressCount: document.getElementById("progress-count"),
     navbarProgress: document.getElementById("navbar-progress"),
@@ -47,6 +51,10 @@
     return "#" + String(id).padStart(4, "0");
   }
 
+  function displayNum(p) {
+    return padId(p.baseId);
+  }
+
   function spriteUrl(id) {
     return `${SPRITE_BASE}${id}.png`;
   }
@@ -66,13 +74,14 @@
   function matchesFilters(p) {
     if (state.gen !== "all" && String(p.gen) !== state.gen) return false;
     if (state.type !== "all" && !p.types.includes(state.type)) return false;
+    if (state.form !== "all" && p.category !== state.form) return false;
     const isCaught = state.caught.has(p.id);
     if (state.status === "caught" && !isCaught) return false;
     if (state.status === "missing" && isCaught) return false;
     if (state.search) {
       const q = state.search.trim().toLowerCase();
-      const num = String(p.id);
-      const matchesNum = q.replace(/^#/, "") === num;
+      const num = q.replace(/^#/, "");
+      const matchesNum = num === String(p.baseId);
       const matchesName = p.name.toLowerCase().includes(q);
       if (!matchesNum && !matchesName) return false;
     }
@@ -105,7 +114,7 @@
       );
       card.setAttribute(
         "aria-label",
-        `${p.name}, ${padId(p.id)}, ${isCaught ? "caught" : "not caught"}`
+        `${p.name}, ${displayNum(p)}, ${isCaught ? "caught" : "not caught"}`
       );
 
       const check = document.createElement("div");
@@ -115,7 +124,13 @@
 
       const num = document.createElement("div");
       num.className = "dex-card-num";
-      num.textContent = padId(p.id);
+      num.textContent = displayNum(p);
+      if (CATEGORY_LABEL[p.category]) {
+        const tag = document.createElement("span");
+        tag.className = `dex-card-tag dex-card-tag-${p.category}`;
+        tag.textContent = CATEGORY_LABEL[p.category];
+        num.appendChild(tag);
+      }
       card.appendChild(num);
 
       const spriteWrap = document.createElement("div");
@@ -202,6 +217,7 @@
     setupChipGroup(els.genFilter, "gen", "gen");
     setupChipGroup(els.typeFilter, "type", "type");
     setupChipGroup(els.statusFilter, "status", "status");
+    setupChipGroup(els.formFilter, "form", "form");
 
     els.search.addEventListener("input", (e) => {
       state.search = e.target.value;

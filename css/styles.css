@@ -259,9 +259,30 @@ body {
 }
 
 .dex-card-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
   font-size: 0.7rem;
   color: var(--label-tertiary);
   font-weight: 600;
+}
+
+.dex-card-tag {
+  font-size: 0.56rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  padding: 0.05rem 0.3rem;
+  border-radius: 999px;
+  color: #fff;
+}
+
+.dex-card-tag-mega {
+  background: #8e44ad;
+}
+
+.dex-card-tag-gmax {
+  background: #c0392b;
 }
 
 .dex-sprite-wrap {

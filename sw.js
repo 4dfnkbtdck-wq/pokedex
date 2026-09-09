@@ -2,15 +2,15 @@
 // content) changes — same discipline as the ?v= query strings the HTML
 // page uses. A new name here makes install() re-fetch everything fresh
 // and activate() drops the old cache instead of leaving it to grow.
-const CACHE_VERSION = "v1";
+const CACHE_VERSION = "v2";
 const CACHE_NAME = `pokedex-tracker-${CACHE_VERSION}`;
 
 const APP_SHELL = [
   "index.html",
   "manifest.webmanifest",
-  "css/styles.css?v=1",
-  "js/data.js?v=1",
-  "js/app.js?v=1",
+  "css/styles.css?v=2",
+  "js/data.js?v=2",
+  "js/app.js?v=2",
   "img/icon-180.png",
   "img/icon-192.png",
   "img/icon-512.png",
