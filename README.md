@@ -1,5 +1,8 @@
 # Pokédex Tracker
 
+**Live app:** https://4dfnkbtdck-wq.github.io/pokedex/
+(once GitHub Pages is enabled for this repo — see below)
+
 A small, dependency-free web app for tracking which Pokémon you've
 obtained — the same idea as a checklist spreadsheet, but as an app. Covers
 the full National Pokédex, #001 Bulbasaur through #1025 Pecharunt (Gen
@@ -15,7 +18,9 @@ python3 -m http.server 8000
 # then visit http://localhost:8000
 ```
 
-It also works as-is on GitHub Pages.
+It also works as-is on GitHub Pages: Settings → Pages → Source:
+"Deploy from a branch" → Branch: `main`, folder `/ (root)` → Save. It'll
+be live at `https://<your-username>.github.io/pokedex/` within a minute.
 
 ## Using it
 
