@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Pokédex Tracker</title>
+  <meta name="description" content="Track which Pokémon you've obtained across the full National Pokédex." />
+  <meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%23ee1515' stroke='%23fff' stroke-width='6'/%3E%3Crect x='4' y='46' width='92' height='8' fill='%23222'/%3E%3Ccircle cx='50' cy='50' r='16' fill='%23fff' stroke='%23222' stroke-width='6'/%3E%3C/svg%3E" />
+  <link rel="apple-touch-icon" href="img/icon-180.png" />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Pokédex" />
+  <link rel="stylesheet" href="css/styles.css?v=1" />
+</head>
+<body>
+  <div class="navbar">
+    <div class="navbar-inner">
+      <span class="navbar-badge">P</span>
+      <span class="navbar-title">Pokédex Tracker</span>
+      <span class="navbar-progress" id="navbar-progress">0 / 0</span>
+    </div>
+  </div>
+
+  <main class="screen">
+    <div class="progress-card">
+      <div class="progress-row">
+        <span class="progress-label">Caught</span>
+        <span class="progress-count" id="progress-count">0 / 0 (0%)</span>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+      </div>
+    </div>
+
+    <div class="search-wrap">
+      <input type="search" id="search-input" class="search-input" placeholder="Search by name or #" autocomplete="off" />
+    </div>
+
+    <div class="filter-scroll" id="gen-filter">
+      <button type="button" class="chip active" data-gen="all">All Gens</button>
+      <button type="button" class="chip" data-gen="1">Gen 1</button>
+      <button type="button" class="chip" data-gen="2">Gen 2</button>
+      <button type="button" class="chip" data-gen="3">Gen 3</button>
+      <button type="button" class="chip" data-gen="4">Gen 4</button>
+      <button type="button" class="chip" data-gen="5">Gen 5</button>
+      <button type="button" class="chip" data-gen="6">Gen 6</button>
+      <button type="button" class="chip" data-gen="7">Gen 7</button>
+      <button type="button" class="chip" data-gen="8">Gen 8</button>
+      <button type="button" class="chip" data-gen="9">Gen 9</button>
+    </div>
+
+    <div class="filter-scroll" id="type-filter">
+      <button type="button" class="chip active" data-type="all">All Types</button>
+    </div>
+
+    <div class="filter-scroll" id="status-filter">
+      <button type="button" class="chip active" data-status="all">All</button>
+      <button type="button" class="chip" data-status="caught">Caught</button>
+      <button type="button" class="chip" data-status="missing">Missing</button>
+    </div>
+
+    <div class="toolbar-row">
+      <button type="button" class="toolbar-btn" id="mark-all-visible">Mark visible caught</button>
+      <button type="button" class="toolbar-btn" id="clear-all">Clear all caught</button>
+    </div>
+
+    <div class="dex-grid" id="dex-grid"></div>
+    <p class="empty-state hidden" id="empty-state">No Pokémon match your search/filters.</p>
+
+    <p class="page-footer">Your caught list is saved in this browser only (localStorage). Sprite art © Nintendo/Game Freak, served via the open-source PokéAPI sprites project.</p>
+  </main>
+
+  <script src="js/data.js?v=1"></script>
+  <script src="js/app.js?v=1"></script>
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => navigator.serviceWorker.register("sw.js"));
+    }
+  </script>
+</body>
+</html>

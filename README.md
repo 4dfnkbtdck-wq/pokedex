@@ -1,1 +1,48 @@
-# pokedex
+# Pokédex Tracker
+
+A small, dependency-free web app for tracking which Pokémon you've
+obtained — the same idea as a checklist spreadsheet, but as an app. Covers
+the full National Pokédex, #001 Bulbasaur through #1025 Pecharunt (Gen
+1–9).
+
+## Running it
+
+No build step, no install. Just open `index.html` in a browser, or serve
+the folder statically:
+
+```bash
+python3 -m http.server 8000
+# then visit http://localhost:8000
+```
+
+It also works as-is on GitHub Pages.
+
+## Using it
+
+- Tap any Pokémon's card to mark it **caught** (green ring, full-color
+  sprite) or back to not-caught (grayed-out sprite).
+- **Search** by name or Pokédex number.
+- Filter by **Generation**, **Type**, or **Caught / Missing** status.
+- **Mark visible caught** marks everything currently matching your
+  filters/search as caught in one tap — handy after a search like
+  "gen 3" if you own that whole box.
+- **Clear all caught** resets your whole list (asks for confirmation
+  first).
+- The progress bar and header count track your total caught out of 1025,
+  regardless of any active filter.
+
+Your caught list is saved to this browser's `localStorage` — it's per
+browser/device, with no account or server involved.
+
+## Data
+
+`js/data.js` holds the dex list (id, English name, generation, types),
+generated from [PokéAPI](https://pokeapi.co)'s public CSV data. Sprite
+images aren't bundled — each card loads its sprite directly from
+PokéAPI's [sprites repo](https://github.com/PokeAPI/sprites) by Pokédex
+number.
+
+---
+
+Fan-made, unofficial tool. Pokémon and Pokémon character names are
+trademarks of Nintendo, Game Freak, and Creatures Inc.
