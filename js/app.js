@@ -208,10 +208,10 @@
 
   function setupChipGroup(container, stateKey, datasetKey) {
     container.addEventListener("click", (e) => {
-      const btn = e.target.closest(".chip");
+      const btn = e.target.closest("button");
       if (!btn) return;
       container
-        .querySelectorAll(".chip")
+        .querySelectorAll("button")
         .forEach((c) => c.classList.remove("active"));
       btn.classList.add("active");
       state[stateKey] = btn.dataset[datasetKey];

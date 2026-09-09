@@ -25,6 +25,22 @@ It also works as-is on GitHub Pages: Settings → Pages → Source:
 "Deploy from a branch" → Branch: `main`, folder `/ (root)` → Save. It'll
 be live at `https://<your-username>.github.io/pokedex/` within a minute.
 
+## Installing it on your phone
+
+It's a PWA — there's no App Store app, but it installs and behaves like
+one:
+
+- **iPhone (Safari)**: open the site, tap Share, then **Add to Home
+  Screen**.
+- **Android (Chrome)**: open the site, tap the ⋮ menu, then **Add to
+  Home screen** / **Install app**.
+
+Once installed it opens full-screen with its own icon, and a service
+worker caches the app shell so it keeps working with no signal — your
+caught list is unaffected either way since it already lives in
+`localStorage`, not the network (sprite images do still need a
+connection the first time each one loads).
+
 ## Using it
 
 - Tap any Pokémon's card to mark it **caught** (green ring, full-color
@@ -61,6 +77,19 @@ Galarian Darmanitan is tracked once (its Standard Mode form) — Zen Mode
 is a temporary in-battle transformation, not a separate obtainable
 Pokémon, matching how the original (non-Galarian) Darmanitan's own Zen
 Mode isn't tracked separately either.
+
+## Files
+
+- `index.html` / `js/app.js` — the tracker itself.
+- `js/data.js` — the dex data described above.
+- `css/styles.css` — all styling.
+- `manifest.webmanifest` / `sw.js` / `img/` — what make it installable
+  (see "Installing it on your phone" above). Bump `sw.js`'s
+  `CACHE_VERSION` (and its own copies of the `?v=` URLs) on any deploy
+  that touches `css`/`js`, the same discipline the `?v=` query strings
+  in `index.html` already follow — an installed icon otherwise keeps
+  serving old files from its offline cache even after those two catch
+  up.
 
 ---
 

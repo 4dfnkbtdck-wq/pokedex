@@ -8,13 +8,13 @@
   <meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%23ee1515' stroke='%23fff' stroke-width='6'/%3E%3Crect x='4' y='46' width='92' height='8' fill='%23222'/%3E%3Ccircle cx='50' cy='50' r='16' fill='%23fff' stroke='%23222' stroke-width='6'/%3E%3C/svg%3E" />
-  <link rel="apple-touch-icon" href="img/icon-180.png" />
+  <link rel="apple-touch-icon" href="img/icon-180.png?v=5" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Pokédex" />
-  <link rel="stylesheet" href="css/styles.css?v=4" />
+  <link rel="stylesheet" href="css/styles.css?v=5" />
 </head>
 <body>
   <div class="navbar">
@@ -26,6 +26,11 @@
   </div>
 
   <main class="screen">
+    <div class="large-title-block">
+      <h1 class="large-title">Pokédex<br />Tracker</h1>
+      <p class="large-subtitle">Track every Pokémon you've caught</p>
+    </div>
+
     <div class="progress-card">
       <div class="progress-row">
         <span class="progress-label">Caught</span>
@@ -68,10 +73,10 @@
       <button type="button" class="chip active" data-type="all">All Types</button>
     </div>
 
-    <div class="filter-scroll" id="status-filter">
-      <button type="button" class="chip active" data-status="all">All</button>
-      <button type="button" class="chip" data-status="caught">Caught</button>
-      <button type="button" class="chip" data-status="missing">Missing</button>
+    <div class="segmented" id="status-filter">
+      <button type="button" class="active" data-status="all">All</button>
+      <button type="button" data-status="caught">Caught</button>
+      <button type="button" data-status="missing">Missing</button>
     </div>
 
     <div class="toolbar-row">
@@ -85,11 +90,24 @@
     <p class="page-footer">Your caught list is saved in this browser only (localStorage). Sprite art © Nintendo/Game Freak, served via the open-source PokéAPI sprites project.</p>
   </main>
 
-  <script src="js/data.js?v=4"></script>
-  <script src="js/app.js?v=4"></script>
+  <script src="js/data.js?v=5"></script>
+  <script src="js/app.js?v=5"></script>
   <script>
     if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => navigator.serviceWorker.register("sw.js"));
+      window.addEventListener("load", () => {
+        navigator.serviceWorker.register("sw.js").then((reg) => reg.update());
+      });
+      // A new service worker (skipWaiting + clients.claim, both already
+      // in sw.js) takes over silently — without this, an already-open
+      // tab/installed app keeps running the OLD page's JS until the
+      // user manually force-quits and relaunches. Reload once instead,
+      // so updates actually reach anyone with the app already open.
+      let reloadedForNewSw = false;
+      navigator.serviceWorker.addEventListener("controllerchange", () => {
+        if (reloadedForNewSw) return;
+        reloadedForNewSw = true;
+        window.location.reload();
+      });
     }
   </script>
 </body>
