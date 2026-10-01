@@ -8,13 +8,13 @@
   <meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%23ee1515' stroke='%23fff' stroke-width='6'/%3E%3Crect x='4' y='46' width='92' height='8' fill='%23222'/%3E%3Ccircle cx='50' cy='50' r='16' fill='%23fff' stroke='%23222' stroke-width='6'/%3E%3C/svg%3E" />
-  <link rel="apple-touch-icon" href="img/icon-180.png?v=13" />
+  <link rel="apple-touch-icon" href="img/icon-180.png?v=15" />
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Pokédex" />
-  <link rel="stylesheet" href="css/styles.css?v=13" />
+  <link rel="stylesheet" href="css/styles.css?v=15" />
 </head>
 <body>
   <div class="navbar">
@@ -90,8 +90,37 @@
     <p class="page-footer">Your caught list is saved in this browser only (localStorage). Sprite art © Nintendo/Game Freak, served via the open-source PokéAPI sprites project.</p>
   </main>
 
-  <script src="js/data.js?v=13"></script>
-  <script src="js/app.js?v=13"></script>
+  <div class="sheet-overlay hidden" id="detail-overlay">
+    <button type="button" class="sheet-backdrop" id="detail-backdrop" aria-label="Close"></button>
+    <div class="sheet" id="detail-sheet" role="dialog" aria-modal="true" aria-labelledby="detail-title">
+      <div class="sheet-grabber"></div>
+      <div class="sheet-header">
+        <button type="button" class="sheet-header-btn" id="detail-close">Close</button>
+        <span class="sheet-title" id="detail-title">&nbsp;</span>
+        <span class="sheet-header-btn" style="visibility: hidden">Close</span>
+      </div>
+      <div class="detail-body">
+        <div class="detail-top">
+          <div class="detail-sprite-wrap">
+            <img id="detail-sprite" alt="" />
+          </div>
+          <div class="detail-num" id="detail-num"></div>
+          <div class="detail-types" id="detail-types"></div>
+        </div>
+
+        <div class="detail-section" id="detail-evo-section">
+          <div class="detail-section-title">Evolution Line</div>
+          <div class="detail-evo-chain" id="detail-evo-chain"></div>
+        </div>
+
+        <button type="button" class="detail-catch-btn" id="detail-catch-btn">Mark as Caught</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/data.js?v=15"></script>
+  <script src="js/evolutions.js?v=15"></script>
+  <script src="js/app.js?v=15"></script>
   <script>
     if ("serviceWorker" in navigator) {
       window.addEventListener("load", () => {

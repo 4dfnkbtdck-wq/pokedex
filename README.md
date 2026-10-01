@@ -45,8 +45,12 @@ connection the first time each one loads).
 
 ## Using it
 
-- Tap any Pokémon's card to mark it **caught** (green ring, full-color
-  sprite) or back to not-caught (grayed-out sprite).
+- Tap any Pokémon's card to open its **detail sheet** — a bigger sprite,
+  its types, and its evolution line (tap any Pokémon in that line to
+  jump straight to its own detail sheet). Marking something caught or
+  not is a separate, deliberate tap on the **Mark as Caught** / **Caught
+  — Tap to Undo** button inside the sheet, not the card itself — so
+  browsing the grid can't accidentally flip your caught state.
 - **Search** by name or Pokédex number — searching a number matches a
   species and all of its Mega/Gigantamax/regional forms.
 - Filter by **Generation**, **Form** (Base / Alolan / Galarian / Hisuian
@@ -109,8 +113,15 @@ and Rapid Strike) are visually and mechanically distinct, so both stay.
 
 ## Files
 
-- `index.html` / `js/app.js` — the tracker itself.
+- `index.html` / `js/app.js` — the tracker itself, including the detail
+  sheet.
 - `js/data.js` — the dex data described above.
+- `js/evolutions.js` — evolution chain data (also from PokéAPI): which
+  Pokémon evolve into which, grouped into chains with a stage per step
+  so branching lines (Eevee, Tyrogue, Wurmple, etc.) render correctly.
+  A Mega/Gigantamax/regional form shows its *base* species' chain — a
+  Mega Charizard's detail sheet still shows Charmander → Charmeleon →
+  Charizard, with Charizard highlighted as the one you're looking at.
 - `css/styles.css` — all styling.
 - `manifest.webmanifest` / `sw.js` / `img/` — what make it installable
   (see "Installing it on your phone" above). Bump `sw.js`'s

@@ -40,7 +40,25 @@
     navbarProgress: document.getElementById("navbar-progress"),
     markVisible: document.getElementById("mark-all-visible"),
     clearAll: document.getElementById("clear-all"),
+    detailOverlay: document.getElementById("detail-overlay"),
+    detailSheet: document.getElementById("detail-sheet"),
+    detailBackdrop: document.getElementById("detail-backdrop"),
+    detailClose: document.getElementById("detail-close"),
+    detailTitle: document.getElementById("detail-title"),
+    detailSprite: document.getElementById("detail-sprite"),
+    detailNum: document.getElementById("detail-num"),
+    detailTypes: document.getElementById("detail-types"),
+    detailEvoSection: document.getElementById("detail-evo-section"),
+    detailEvoChain: document.getElementById("detail-evo-chain"),
+    detailCatchBtn: document.getElementById("detail-catch-btn"),
   };
+
+  const POKEDEX_BY_ID = new Map(POKEDEX.map((p) => [p.id, p]));
+  const BASE_BY_SPECIES_ID = new Map(
+    POKEDEX.filter((p) => p.category === "base").map((p) => [p.baseId, p])
+  );
+
+  let detailPokemon = null;
 
   function loadCaught() {
     try {
@@ -132,10 +150,7 @@
       card.dataset.id = String(p.id);
       card.setAttribute("role", "button");
       card.setAttribute("tabindex", "0");
-      card.setAttribute(
-        "aria-pressed",
-        isCaught ? "true" : "false"
-      );
+      card.setAttribute("aria-haspopup", "dialog");
       card.setAttribute(
         "aria-label",
         `${p.name}, ${displayNum(p)}, ${isCaught ? "caught" : "not caught"}`
@@ -184,11 +199,11 @@
       for (const t of p.types) types.appendChild(typeBadge(t));
       card.appendChild(types);
 
-      card.addEventListener("click", () => toggleCaught(p.id));
+      card.addEventListener("click", () => openDetail(p));
       card.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
-          toggleCaught(p.id);
+          openDetail(p);
         }
       });
 
@@ -212,11 +227,115 @@
     const card = els.grid.querySelector(`.dex-card[data-id="${id}"]`);
     if (!card) return;
     const isCaught = state.caught.has(id);
+    const p = POKEDEX_BY_ID.get(id);
     card.classList.toggle("caught", isCaught);
-    card.setAttribute("aria-pressed", isCaught ? "true" : "false");
+    if (p) {
+      card.setAttribute(
+        "aria-label",
+        `${p.name}, ${displayNum(p)}, ${isCaught ? "caught" : "not caught"}`
+      );
+    }
     if (state.status !== "all") {
       renderGrid();
     }
+  }
+
+  function evoSpriteImg(id) {
+    const img = document.createElement("img");
+    img.loading = "lazy";
+    img.alt = "";
+    img.src = spriteUrl(id);
+    img.onerror = () => {
+      if (!img.dataset.triedFallback) {
+        img.dataset.triedFallback = "1";
+        img.src = spriteFallbackUrl(id);
+      } else {
+        img.style.visibility = "hidden";
+      }
+    };
+    return img;
+  }
+
+  function renderEvoChain(p) {
+    const chainId = SPECIES_CHAIN[p.baseId];
+    const nodes = chainId != null ? EVO_CHAINS[chainId] : null;
+    if (!nodes || nodes.length < 2) {
+      els.detailEvoSection.hidden = true;
+      els.detailEvoChain.innerHTML = "";
+      return;
+    }
+    els.detailEvoSection.hidden = false;
+    els.detailEvoChain.innerHTML = "";
+
+    const stages = [];
+    for (const node of nodes) {
+      if (!stages[node.stage]) stages[node.stage] = [];
+      stages[node.stage].push(node);
+    }
+
+    const frag = document.createDocumentFragment();
+    stages.forEach((stageNodes, i) => {
+      if (i > 0) {
+        const arrow = document.createElement("span");
+        arrow.className = "detail-evo-arrow";
+        arrow.textContent = "→";
+        arrow.setAttribute("aria-hidden", "true");
+        frag.appendChild(arrow);
+      }
+      const stageEl = document.createElement("div");
+      stageEl.className = "detail-evo-stage";
+      for (const node of stageNodes) {
+        const chip = document.createElement("button");
+        chip.type = "button";
+        chip.className = "detail-evo-chip" + (node.id === p.baseId ? " current" : "");
+        chip.appendChild(evoSpriteImg(node.id));
+        const label = document.createElement("span");
+        label.className = "detail-evo-chip-name";
+        label.textContent = node.name;
+        chip.appendChild(label);
+        chip.addEventListener("click", () => {
+          const target = BASE_BY_SPECIES_ID.get(node.id);
+          if (target) openDetail(target);
+        });
+        stageEl.appendChild(chip);
+      }
+      frag.appendChild(stageEl);
+    });
+    els.detailEvoChain.appendChild(frag);
+  }
+
+  function updateDetailCatchButton() {
+    if (!detailPokemon) return;
+    const isCaught = state.caught.has(detailPokemon.id);
+    els.detailCatchBtn.textContent = isCaught ? "Caught — Tap to Undo" : "Mark as Caught";
+    els.detailCatchBtn.classList.toggle("is-caught", isCaught);
+  }
+
+  function openDetail(p) {
+    detailPokemon = p;
+    els.detailTitle.textContent = p.name;
+    els.detailSprite.src = spriteUrl(p.id);
+    els.detailSprite.onerror = () => {
+      if (!els.detailSprite.dataset.triedFallback) {
+        els.detailSprite.dataset.triedFallback = "1";
+        els.detailSprite.src = spriteFallbackUrl(p.id);
+      }
+    };
+    delete els.detailSprite.dataset.triedFallback;
+    els.detailNum.textContent = displayNum(p) + (CATEGORY_LABEL[p.category] ? ` · ${CATEGORY_LABEL[p.category]}` : "");
+    els.detailTypes.innerHTML = "";
+    for (const t of p.types) els.detailTypes.appendChild(typeBadge(t));
+    renderEvoChain(p);
+    updateDetailCatchButton();
+    els.detailOverlay.classList.remove("hidden");
+    els.detailSheet.scrollTop = 0;
+    const body = els.detailSheet.querySelector(".detail-body");
+    if (body) body.scrollTop = 0;
+  }
+
+  function closeDetail() {
+    els.detailOverlay.classList.add("hidden");
+    detailPokemon = null;
   }
 
   function activeButtonLabel(container) {
@@ -295,6 +414,19 @@
       saveCaught();
       renderGrid();
       updateProgress();
+    });
+
+    els.detailClose.addEventListener("click", closeDetail);
+    els.detailBackdrop.addEventListener("click", closeDetail);
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && !els.detailOverlay.classList.contains("hidden")) {
+        closeDetail();
+      }
+    });
+    els.detailCatchBtn.addEventListener("click", () => {
+      if (!detailPokemon) return;
+      toggleCaught(detailPokemon.id);
+      updateDetailCatchButton();
     });
 
     renderGrid();
